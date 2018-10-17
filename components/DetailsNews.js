@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, ScrollView, Button} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Button, Linking} from 'react-native';
 
 export default class DetailsNews extends React.PureComponent {
     constructor(props) {
@@ -7,8 +7,8 @@ export default class DetailsNews extends React.PureComponent {
     }
 
     render() {
-        const news = this.props.navigation.getParam('news')
-
+        const news = this.props.navigation.getParam('news');
+        const link = this.props.navigation.getParam('link');
 
         return (
             <View style={{flex: 1}}>
@@ -17,7 +17,13 @@ export default class DetailsNews extends React.PureComponent {
                         <Text style={styles.gameFeed}>{news}</Text>
                     </View>
                 </ScrollView>
-                <Button title='Button' onPress={()=>{console.log('ok')}} />
+                <Button title='Open news in browser' onPress={() => {
+                    Linking.canOpenURL(link).then(support =>{
+                        if (support) {
+                            Linking.openURL(link);
+                        }
+                    })
+                }} />
             </View>
         );
     }

@@ -19,7 +19,7 @@ export default class NewsTitles extends React.PureComponent {
 
                     renderItem={({item}) => (
                         <TouchableOpacity
-                            onPress={() => this.props.navigation.navigate('DetailsNews', {news: item.text})}>
+                            onPress={() => this.props.navigation.navigate('DetailsNews', {news: item.text, link: item.link })}>
                             <Text style={styles.singleResult}> {item.title} </Text>
                         </TouchableOpacity>
                     )}
