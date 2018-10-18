@@ -14,16 +14,18 @@ export default class DetailsNews extends React.PureComponent {
             <View style={{flex: 1}}>
                 <ScrollView>
                     <View style={styles.container}>
-                        <Text style={styles.gameFeed}>{news}</Text>
+                        <Text style={styles.newsText}>{news}</Text>
                     </View>
                 </ScrollView>
-                <Button title='Open news in browser' onPress={() => {
-                    Linking.canOpenURL(link).then(support =>{
-                        if (support) {
-                            Linking.openURL(link);
-                        }
-                    })
-                }} />
+                <View style={styles.viewButton}>
+                    <Button style={styles.button} title='Open news in browser' onPress={() => {
+                        Linking.canOpenURL(link).then(support =>{
+                            if (support) {
+                                Linking.openURL(link);
+                            }
+                        })
+                    }} />
+                </View>
             </View>
         );
     }
@@ -32,8 +34,22 @@ export default class DetailsNews extends React.PureComponent {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#e4e4e4',
         justifyContent: 'center',
         alignItems: 'stretch',
+    },
+    newsText:{
+        fontSize: 20,
+    },
+    viewButton: {
+        borderWidth: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderColor: '#000000',
+        backgroundColor: '#d3d3d3'
+
+    },
+    button: {
+        color: '#FFFFFF'
     }
 });

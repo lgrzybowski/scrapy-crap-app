@@ -9,6 +9,7 @@ export default class NewsPage extends React.PureComponent {
         this.state = {
             isLoading: true,
             refreshing: false,
+            dataSource: [],
         };
         this.readData = this.readData.bind(this)
     }
@@ -18,7 +19,7 @@ export default class NewsPage extends React.PureComponent {
     }
 
     readData() {
-        return fetch('http://localhost:3000')
+        return fetch('http://localhost:8080')
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
@@ -47,10 +48,13 @@ export default class NewsPage extends React.PureComponent {
                     refreshing={this.state.refreshing}
                     onRefresh={this.readData}
                 />
-            }>
+                }>
                 <Text style={styles.gameFeed}>Gaming news feed</Text>
                 <FlatList style={styles.flatList}
                           data={this.state.dataSource}
+                          ListEmptyComponent={() => {
+                              return <Text style={styles.noResults}>We are not having results to show, try to refresh or just back later.</Text>
+                          }}
                           ItemSeparatorComponent={() =>
                               <View style={styles.seperator}/>}
                           renderItem={({item}) => (
@@ -71,13 +75,17 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        backgroundColor: '#fff',
+        backgroundColor: '#e4e4e4',
         justifyContent: 'center',
         alignItems: 'stretch',
     },
+    noResults:{
+        marginTop: '10%',
+        fontSize: 20,
+    },
     gameFeed:{
-        marginTop:30,
-        marginBottom:50,
+        marginTop: '10%',
+        marginBottom: '10%',
         fontSize: 30,
         textAlign: 'center'
     },
@@ -89,10 +97,10 @@ const styles = StyleSheet.create({
     },
     seperator: {
         backgroundColor: '#2a9cd9',
-        height: 5,
+        height: '10%',
     },
-    singleResult:{
+    singleResult: {
       fontSize: 30,
-      marginLeft: 10,
+      marginLeft: '5%',
     }
 });

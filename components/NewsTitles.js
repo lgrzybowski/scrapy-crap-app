@@ -34,12 +34,15 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        backgroundColor: '#fff',
+        backgroundColor: '#e4e4e4',
         justifyContent: 'center',
         alignItems: 'stretch',
     },
+    singleResult: {
+      fontSize: 15,
+    },
     seperator: {
         backgroundColor: '#2a9cd9',
-        height: 5,
+        height: '5%',
     },
 });
