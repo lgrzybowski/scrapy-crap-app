@@ -16,6 +16,7 @@ const App = createStackNavigator(
     },
     {
       initialRouteName: 'NewsPage',
+      swipeEnabled: true
     }
 );
 

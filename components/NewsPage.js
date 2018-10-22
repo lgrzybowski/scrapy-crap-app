@@ -1,5 +1,13 @@
 import React from 'react';
-import {ActivityIndicator, StyleSheet, Text, ScrollView, View, FlatList, TouchableOpacity, RefreshControl} from 'react-native';
+import {
+    ActivityIndicator,
+    StyleSheet,
+    Text,
+    View,
+    FlatList,
+} from 'react-native';
+
+import { sites } from '../sites';
 
 import NewsTitles from './NewsTitles';
 
@@ -7,66 +15,38 @@ export default class NewsPage extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: true,
-            refreshing: false,
-            dataSource: [],
+            dataSource: sites,
         };
-        this.readData = this.readData.bind(this)
     }
 
-    componentDidMount() {
-        this.readData();
-    }
-
-    readData() {
-        return fetch('http://localhost:8080')
-            .then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({
-                    isLoading: false,
-                    dataSource: responseJson,
-                });
-
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    }
+    renderItem = ({item}) => (
+        <Text onPress={() => this.props.navigation.navigate('NewsTitles', {newsTitles: item})}
+              style={styles.singleResult}> {item.name} </Text>
+    );
 
     render() {
         if (this.state.isLoading) {
             return (
-                <View style={[styles.container, styles.horizontal]}>
+                <View style={styles.container}>
                     <ActivityIndicator/>
                 </View>
             )
         }
 
         return (
-            <ScrollView contentContainerStyle={styles.container} refreshControl={
-                <RefreshControl
-                    refreshing={this.state.refreshing}
-                    onRefresh={this.readData}
-                />
-                }>
+            <View style={styles.container}>
                 <Text style={styles.gameFeed}>Gaming news feed</Text>
-                <FlatList style={styles.flatList}
+                <FlatList
                           data={this.state.dataSource}
-                          ListEmptyComponent={() => {
-                              return <Text style={styles.noResults}>We are not having results to show, try to refresh or just back later.</Text>
-                          }}
+                          initialNumToRender={5}
+                          removeClippedSubviews={ false }
                           ItemSeparatorComponent={() =>
                               <View style={styles.seperator}/>}
-                          renderItem={({item}) => (
-                              <TouchableOpacity style={styles.opacity}
-                                  onPress={() => this.props.navigation.navigate('NewsTitles', { feedNews:item })}
-                              >
-                                  <Text style={styles.singleResult}> {item.site} </Text>
-                              </TouchableOpacity>
-                          )}
-                          keyExtractor={(item, index) => index.toString()}
-                />
-            </ScrollView>
+                          renderItem={this.renderItem}
+                          extraData={this.state}
+                          keyExtractor={item => item.name} />
+
+            </View>
         );
     }
 }
@@ -74,33 +54,23 @@ export default class NewsPage extends React.PureComponent {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'column',
-        backgroundColor: '#e4e4e4',
         justifyContent: 'center',
         alignItems: 'stretch',
     },
-    noResults:{
-        marginTop: '10%',
+    noResults: {
         fontSize: 20,
     },
-    gameFeed:{
-        marginTop: '10%',
-        marginBottom: '10%',
-        fontSize: 30,
+    gameFeed: {
+        marginTop: 30,
+        fontSize: 20,
         textAlign: 'center'
-    },
-    flatList: {
-        paddingTop: 0,
-    },
-    opacity:{
-        flexDirection: 'row',
     },
     seperator: {
         backgroundColor: '#2a9cd9',
-        height: '10%',
+        height: 5,
     },
     singleResult: {
-      fontSize: 30,
-      marginLeft: '5%',
+        fontSize: 20,
+        marginLeft: 5,
     }
 });

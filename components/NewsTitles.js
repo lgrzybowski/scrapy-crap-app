@@ -1,29 +1,75 @@
 import React from 'react'
-import {StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, FlatList, ActivityIndicator} from 'react-native';
 
 import DetailsNews from './DetailsNews'
 
+import { fetchArticles } from '../helpers/fetchArticlesHelper'
+
 export default class NewsTitles extends React.PureComponent {
     constructor(props) {
-        super(props)
+        super(props);
+        this.state = {
+            isLoading: true,
+            dataSource: null,
+            error: false
+        }
     }
 
+    componentDidMount() {
+        this.getArticles();
+    }
+
+    getArticles = async () =>{
+        const siteName = this.props.navigation.getParam('newsTitles');
+
+        try {
+          const dataSource = await fetchArticles(siteName);
+
+          this.setState({
+              dataSource: dataSource && dataSource.news,
+              isLoading: false,
+          })
+
+      }  catch (error) {
+            this.setState({
+                error: true,
+                isLoading: false
+            })
+      }
+    };
+
     render() {
-        const feeds = this.props.navigation.getParam('feedNews')
+        if (this.state.isLoading) {
+            return (
+                <View style={styles.load}>
+                    <ActivityIndicator/>
+                </View>
+            )
+        }
+
+        if (this.state.error) {
+            return (
+                <View style={styles.noResults}>
+                    <Text>We are not having results to show, try to back later.</Text>
+                </View>
+           )
+        }
+
         return (
             <View style={styles.container}>
-                <FlatList
-                    data={feeds.news}
+                    <FlatList
+                    data={this.state.dataSource}
                     ItemSeparatorComponent={() =>
                         <View style={styles.seperator}/>}
-
+                    initialNumToRender={20}
+                    maxToRenderPerBatch={2}
                     renderItem={({item}) => (
-                        <TouchableOpacity
-                            onPress={() => this.props.navigation.navigate('DetailsNews', {news: item.text, link: item.link })}>
-                            <Text style={styles.singleResult}> {item.title} </Text>
-                        </TouchableOpacity>
+                        <Text onPress={() => this.props.navigation.navigate('DetailsNews', {
+                            news: item.text,
+                            link: item.link
+                        })}> {item.title} </Text>
                     )}
-                    keyExtractor={(item, index) => index.toString()}
+                    keyExtractor={item => item.title}
                 />
             </View>
         )
@@ -33,16 +79,31 @@ export default class NewsTitles extends React.PureComponent {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'column',
-        backgroundColor: '#e4e4e4',
-        justifyContent: 'center',
-        alignItems: 'stretch',
+        backgroundColor: '#e4e4e4'
     },
-    singleResult: {
-      fontSize: 15,
+    load: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     seperator: {
         backgroundColor: '#2a9cd9',
-        height: '5%',
+        marginTop: 20,
+        marginBottom: 20,
+        height: 5,
     },
+    noResults: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: 20,
+    }
 });
