@@ -24,9 +24,8 @@ export default class NewsTitles extends React.PureComponent {
 
         try {
           const dataSource = await fetchArticles(siteName);
-
           this.setState({
-              dataSource: dataSource && dataSource.news,
+              dataSource,
               isLoading: false,
           })
 
