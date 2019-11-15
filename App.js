@@ -5,9 +5,14 @@ import DetailsNews from './components/DetailsNews'
 
 import {
     createStackNavigator,
+} from 'react-navigation-stack';
+
+import {
+    createAppContainer,
 } from 'react-navigation';
 
-const App = createStackNavigator(
+
+const RootStack = createStackNavigator(
     {
       NewsPage: {screen: NewsPage},
       NewsTitles: {screen: NewsTitles},
@@ -19,5 +24,7 @@ const App = createStackNavigator(
       swipeEnabled: true
     }
 );
+
+const App = createAppContainer(RootStack);
 
 export default App;

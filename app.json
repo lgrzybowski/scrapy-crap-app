@@ -1,6 +1,6 @@
 {
   "expo": {
-    "sdkVersion": "32.0.0",
+    "sdkVersion": "35.0.0",
     "privacy": "unlisted",
     "name": "Scrapy Crap App",
     "icon": "./icon/spider.png",
@@ -11,6 +11,10 @@
     },
     "android": {
       "package": "com.lukasz.scrapycrapapp"
-    }
+    },
+    "platforms": [
+      "android",
+      "ios"
+    ]
   }
 }
