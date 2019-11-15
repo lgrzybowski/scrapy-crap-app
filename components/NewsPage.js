@@ -44,7 +44,8 @@ export default class NewsPage extends React.PureComponent {
                               <View style={styles.seperator}/>}
                           renderItem={this.renderItem}
                           extraData={this.state}
-                          keyExtractor={item => item.name} />
+                          keyExtractor={item => item.name}
+                />
 
             </View>
         );
@@ -57,20 +58,19 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'stretch',
     },
-    noResults: {
-        fontSize: 20,
-    },
     gameFeed: {
         marginTop: 30,
-        fontSize: 20,
-        textAlign: 'center'
+        fontSize: 35,
+        textAlign: 'center',
+        marginBottom: 40,
     },
     seperator: {
+        marginBottom: 10,
         backgroundColor: '#2a9cd9',
         height: 5,
     },
     singleResult: {
-        fontSize: 20,
-        marginLeft: 5,
+        fontSize: 25,
+        marginLeft: 10,
     }
 });
