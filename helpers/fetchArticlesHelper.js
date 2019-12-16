@@ -1,10 +1,10 @@
 import NetInfo from "@react-native-community/netinfo";
-import {addDataToLocalStorage, getDataFromLocalStorage} from "./asyncStorage";
+import { addDataToLocalStorage, getDataFromLocalStorage } from "./asyncStorage";
 
 const fetchArticles = async (siteName) => {
     const netInfoFetch = await NetInfo.fetch();
     const {name} = siteName;
-    if (netInfoFetch.isConnected) {
+    if (netInfoFetch.isConnected || netInfoFetch.isInternetReachable) {
         const response = await fetch(`https://infinite-fjord-69137.herokuapp.com/${name}`, {
             headers: {
                 Accept: 'application/json',

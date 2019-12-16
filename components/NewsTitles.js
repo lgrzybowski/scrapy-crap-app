@@ -5,7 +5,7 @@ import DetailsNews from './DetailsNews'
 
 import { fetchArticles } from '../helpers/fetchArticlesHelper'
 
-export default class NewsTitles extends React.PureComponent {
+export default class NewsTitles extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -19,7 +19,7 @@ export default class NewsTitles extends React.PureComponent {
         this.getArticles();
     }
 
-    getArticles = async () =>{
+    getArticles = async () => {
         const siteName = this.props.navigation.getParam('newsTitles');
 
         try {
@@ -46,7 +46,7 @@ export default class NewsTitles extends React.PureComponent {
             )
         }
 
-        if (this.state.error) {
+        if (!this.state.dataSource.length || this.state.error) {
             return (
                 <View style={styles.noResults}>
                     <Text>We are not having results to show, try to back later.</Text>

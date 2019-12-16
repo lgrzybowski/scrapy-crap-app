@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View, ScrollView, Button, Linking} from 'react-native';
 
-export default class DetailsNews extends React.PureComponent {
+export default class DetailsNews extends React.Component {
     constructor(props) {
         super(props);
     }

@@ -8,4 +8,8 @@ const getDataFromLocalStorage = async (siteName) => {
     return await AsyncStorage.getItem(`@${siteName}`);
 };
 
-export { addDataToLocalStorage, getDataFromLocalStorage }
+const getAllDataFromLocalStorage = async () => {
+    return await AsyncStorage.getAllKeys();
+};
+
+export { addDataToLocalStorage, getDataFromLocalStorage, getAllDataFromLocalStorage }

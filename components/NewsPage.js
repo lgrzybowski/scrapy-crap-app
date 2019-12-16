@@ -11,7 +11,7 @@ import { sites } from '../sites';
 
 import NewsTitles from './NewsTitles';
 
-export default class NewsPage extends React.PureComponent {
+export default class NewsPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -35,7 +35,6 @@ export default class NewsPage extends React.PureComponent {
 
         return (
             <View style={styles.container}>
-                <Text style={styles.gameFeed}>Gaming news feed</Text>
                 <FlatList
                           data={this.state.dataSource}
                           initialNumToRender={5}
