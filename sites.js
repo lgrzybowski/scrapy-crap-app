@@ -3,7 +3,10 @@ const sites = [
     {name: 'grampl'},
     {name: 'gryonline'},
     {name: 'mmorpgorgpl'},
-    {name: 'eurogamerpl'}
+    {name: 'eurogamerpl'},
+    {name: 'antyweb'},
+    {name: 'spidersweb'},
+    {name: 'ppe'},
 ];
 
 
