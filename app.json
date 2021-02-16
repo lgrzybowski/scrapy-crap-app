@@ -1,6 +1,5 @@
 {
   "expo": {
-    "sdkVersion": "35.0.0",
     "privacy": "unlisted",
     "name": "Scrapy Crap App",
     "icon": "./icon/spider.png",
